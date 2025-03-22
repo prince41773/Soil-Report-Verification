@@ -17,7 +17,7 @@ API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-f
 # Flask & FastAPI Setup
 flask_app = Flask(__name__)
 CORS(flask_app)
-fastapi_app = FastAPI()
+api = FastAPI()
 
 # Language Mapping
 languages = {"English": "en", "Hindi": "hi", "Gujarati": "gu"}
@@ -166,7 +166,7 @@ def get_audio():
     return send_file("output.mp3", mimetype="audio/mpeg")
 
 # FastAPI Endpoint for MERN Stack
-@fastapi_app.post("/process_pdf/")
+@api.post("/process_pdf/")
 async def process_pdf(file: UploadFile, lang: str = "English"):
     lang_code = languages.get(lang, "en")
     file_bytes = BytesIO(await file.read())
@@ -182,7 +182,7 @@ async def process_pdf(file: UploadFile, lang: str = "English"):
 
 # Run FastAPI in a Separate Thread
 def run_fastapi():
-    uvicorn.run(fastapi_app, host="0.0.0.0", port=8001)
+    uvicorn.run(api, host="0.0.0.0", port=8001, log_level="info")
 
 if __name__ == "__main__":
     threading.Thread(target=run_fastapi, daemon=True).start()
