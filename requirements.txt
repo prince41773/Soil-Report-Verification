@@ -1,0 +1,8 @@
+Flask
+fastapi
+uvicorn
+flask-cors
+PyPDF2
+requests
+gtts
+deep-translator
